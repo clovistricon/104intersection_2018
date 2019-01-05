@@ -11,9 +11,11 @@
 
 int intersection_cone(int *p, int *v, int param)
 {
-    float a = powf(v[0], 2) + powf(v[1], 2);
-    float b = (2 * (p[0] * v[0])) + (2 * (p[1] * v[1]));
-    float c = (powf(p[0], 2) + powf(p[1], 2)) - powf(p[2] * sinf(param), 2);
+    float tanparam = powf(tanf((param * M_PI) / 180), 2);
+    float a = (powf(v[0], 2) + powf(v[1], 2)) - (powf(v[2], 2) * tanparam);
+    float b = ((2 * (p[0] * v[0])) +
+               (2 * (p[1] * v[1]))) - ((2 * p[2] * v[2]) * tanparam);
+    float c = (powf(p[0], 2) + powf(p[1], 2)) - (powf(p[2], 2) * tanparam);
     float delta = powf(b, 2) - (4 * (a * c));
     float x1;
     float x2;
@@ -21,19 +23,22 @@ int intersection_cone(int *p, int *v, int param)
     printf("Cone with a %d degree angle\n", param);
     printf("Line passing through the point (%d, %d, %d) and parallel to the vector (%d, %d, %d)\n", p[0], p[1], p[2], v[0], v[1], v[2]);
     if (delta == 0) {
-        if ((v[0] == (v[2] * sinf(param) * M_PI / 180)) && (v[0] == v[1]))
+        if (a == 0)
             printf("There is an infinite number of intersection points.\n");
         else {
             x1 = (-b) / (2 * a);
-            printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
+            printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n"
+                 , p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
         }
     }
     else if (delta > 0) {
         x1 = ((-b) + sqrtf(delta)) / (2 * a);
         x2 = ((-b) - sqrtf(delta)) / (2 * a);
         printf("2 intersection points:\n");
-        printf("(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
-        printf("(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x2), p[1] + (v[1] * x2), p[2] + (v[2] * x2));
+        printf("(%.3f, %.3f, %.3f)\n"
+               , p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
+        printf("(%.3f, %.3f, %.3f)\n"
+               , p[0] + (v[0] * x2), p[1] + (v[1] * x2), p[2] + (v[2] * x2));
     }
     else
         printf("No intersection point.\n");
@@ -56,15 +61,18 @@ int intersection_cylindre(int *p, int *v, int param)
             printf("There is an infinite number of intersection points.\n");
         else {
             x1 = (-b) / (2 * a);
-            printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
+            printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n"
+                 , p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
         }
     }
     else if (delta > 0) {
         x1 = ((-b) + sqrtf(delta)) / (2 * a);
         x2 = ((-b) - sqrtf(delta)) / (2 * a);
         printf("2 intersection points:\n");
-        printf("(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
-        printf("(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x2), p[1] + (v[1] * x2), p[2] + (v[2] * x2));
+        printf("(%.3f, %.3f, %.3f)\n"
+               , p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
+        printf("(%.3f, %.3f, %.3f)\n"
+               , p[0] + (v[0] * x2), p[1] + (v[1] * x2), p[2] + (v[2] * x2));
     }
     else
         printf("No intersection point.\n");
@@ -84,14 +92,17 @@ int intersection_sphere(int *p, int *v, int param)
     printf("Line passing through the point (%d, %d, %d) and parallel to the vector (%d, %d, %d)\n", p[0], p[1], p[2], v[0], v[1], v[2]);
     if (delta == 0) {
         x1 = (-b) / (2 * a);
-        printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
+        printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n"
+            , p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
         }
     else if (delta > 0) {
         x1 = ((-b) + sqrtf(delta)) / (2 * a);
         x2 = ((-b) - sqrtf(delta)) / (2 * a);
         printf("2 intersection points:\n");
-        printf("(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
-        printf("(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x2), p[1] + (v[1] * x2), p[2] + (v[2] * x2));
+        printf("(%.3f, %.3f, %.3f)\n"
+               , p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
+        printf("(%.3f, %.3f, %.3f)\n"
+               , p[0] + (v[0] * x2), p[1] + (v[1] * x2), p[2] + (v[2] * x2));
     }
     else
         printf("No intersection point.\n");
