@@ -1,3 +1,9 @@
+/*
+** EPITECH PROJECT, 2018
+** 104intersection
+** File description:
+** show intersection points
+*/
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,10 +21,10 @@ int intersection_cone(int *p, int *v, int param)
     printf("Cone with a %d degree angle\n", param);
     printf("Line passing through the point (%d, %d, %d) and parallel to the vector (%d, %d, %d)\n", p[0], p[1], p[2], v[0], v[1], v[2]);
     if (delta == 0) {
-        if ((v[0] == (v[2] * ABS(sinf(param)))) && (v[0] == v[1]))
+        if ((v[0] == (v[2] * sinf(param) * M_PI / 180)) && (v[0] == v[1]))
             printf("There is an infinite number of intersection points.\n");
         else {
-            x1 = (-b) / (2 * a); 
+            x1 = (-b) / (2 * a);
             printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
         }
     }
@@ -46,10 +52,10 @@ int intersection_cylindre(int *p, int *v, int param)
     printf("Cylinder of radius %d\n", param);
     printf("Line passing through the point (%d, %d, %d) and parallel to the vector (%d, %d, %d)\n", p[0], p[1], p[2], v[0], v[1], v[2]);
     if (delta == 0) {
-        if ((v[0] == 0) && (v[1] == 0))
+        if ((v[0] == 0) && (v[1] == 0) && (c == 0))
             printf("There is an infinite number of intersection points.\n");
         else {
-            x1 = (-b) / (2 * a); 
+            x1 = (-b) / (2 * a);
             printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
         }
     }
@@ -77,7 +83,7 @@ int intersection_sphere(int *p, int *v, int param)
     printf("Sphere of radius %d\n", param);
     printf("Line passing through the point (%d, %d, %d) and parallel to the vector (%d, %d, %d)\n", p[0], p[1], p[2], v[0], v[1], v[2]);
     if (delta == 0) {
-        x1 = (-b) / (2 * a); 
+        x1 = (-b) / (2 * a);
         printf("1 intersection point:\n(%.3f, %.3f, %.3f)\n", p[0] + (v[0] * x1), p[1] + (v[1] * x1), p[2] + (v[2] * x1));
         }
     else if (delta > 0) {
